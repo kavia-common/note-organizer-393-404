@@ -1,32 +1,377 @@
 /* CSS Variables for Theme Management */
 :root {
-  /* Light theme colors */
+  /* Brand/Palette per requirements */
+  --primary: #1976d2;
+  --secondary: #424242;
+  --accent: #ffd600;
+
+  /* Theme colors (light) */
   --bg-primary: #ffffff;
   --bg-secondary: #f8f9fa;
   --text-primary: #282c34;
-  --text-secondary: #61dafb;
+  --text-secondary: #424242;
   --border-color: #e9ecef;
-  --button-bg: #007bff;
-  --button-text: #ffffff;
+  --button-bg: var(--primary);
+  --button-text: #fff;
 }
 
 [data-theme="dark"] {
-  /* Dark theme colors */
+  /* Theme colors (dark) */
   --bg-primary: #1a1a1a;
-  --bg-secondary: #282c34;
+  --bg-secondary: #23272f;
   --text-primary: #ffffff;
-  --text-secondary: #61dafb;
-  --border-color: #404040;
-  --button-bg: #0056b3;
-  --button-text: #ffffff;
+  --text-secondary: #bababa;
+  --border-color: #282c34;
+  --button-bg: var(--accent);
+  --button-text: #23272f;
+}
+
+body, html {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
 }
 
 .App {
-  text-align: center;
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
+  font-family: 'Segoe UI', 'Roboto', 'Oxygen', 'Helvetica Neue', Arial, sans-serif;
   min-height: 100vh;
-  transition: background-color 0.3s ease, color 0.3s ease;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: background 0.3s, color 0.3s;
+}
+
+.app-flex {
+  display: flex;
+  height: 100vh;
+}
+
+.navbar {
+  background: var(--bg-secondary);
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.7rem 2rem;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 500;
+  height: 60px;
+  min-height: 60px;
+}
+.navbar-brand {
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.navbar-user {
+  color: var(--text-secondary);
+  margin-right: 0.4rem;
+}
+
+.theme-toggle {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 50%;
+  width: 34px;
+  height: 34px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-right: 0.4rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: filter 0.2s;
+}
+.theme-toggle:hover {
+  filter: brightness(0.95);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 220px;
+  min-width: 200px;
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 1rem 0.7rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2.2rem;
+  height: 100vh;
+}
+
+.sidebar-section { margin-bottom: 1rem; }
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.sidebar-list {
+  list-style: none;
+  padding-left: 0;
+}
+.sidebar-list li {
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 1.5px 0;
+  transition: background 0.15s;
+}
+.sidebar-list li.active,
+.sidebar-list li:hover  {
+  background: var(--primary);
+  color: #fff;
+}
+
+/* Buttons / Reusable */
+.btn {
+  background: var(--button-bg);
+  color: var(--button-text);
+  border: none;
+  border-radius: 7px;
+  font-weight: 600;
+  padding: 8px 20px;
+  margin: 0 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.btn:hover {
+  filter: brightness(0.95);
+}
+.btn-secondary {
+  background: var(--border-color);
+  color: var(--primary);
+}
+.btn-large {
+  font-size: 1.1rem;
+  padding: 12px 26px;
+  width: 85%;
+  margin: 10px auto;
+  display: block;
+}
+.btn-small {
+  font-size: 0.89rem;
+  padding: 5px 10px;
+}
+@media (max-width: 768px) {
+  .btn-large { width: 100%; }
+}
+
+/* Main UI structure */
+.notes-main {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 0;
+  background: var(--bg-primary);
+  min-height: 0;
+  height: calc(100vh - 60px);
+}
+.notes-list-container {
+  width: 340px;
+  min-width: 210px;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border-color);
+  padding: 1rem 1.1rem;
+  overflow-y: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.note-list-item {
+  padding: 0.55rem 0.7rem 0.4rem;
+  margin: 0.3rem 0;
+  background: transparent;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.17s;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  border-left: 5px solid transparent;
+}
+.note-list-item:hover,
+.note-list-item.note-selected {
+  background: var(--primary);
+  color: #fff;
+  border-left: 5px solid var(--accent);
+}
+.note-title {
+  font-weight: 700;
+}
+.note-snippet {
+  font-size: 0.93rem;
+  color: var(--text-secondary);
+  margin-top: 1.5px;
+}
+.note-meta {
+  font-size: 0.83rem;
+  margin-top: 3px;
+  color: var(--secondary);
+}
+.note-tag {
+  background: var(--accent);
+  color: #444;
+  border-radius: 2ex;
+  font-size: 0.83em;
+  padding: 0 7px;
+  margin: 0 2px;
+}
+.note-category {
+  font-style: italic;
+  margin-right: 0.5em;
+}
+
+.notes-empty {
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  margin: 2.7em 0;
+}
+
+/* Note details panel */
+.note-details-panel {
+  flex: 1 1 auto;
+  padding: 2rem 2.3rem;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.note-details {
+  margin-bottom: 2em;
+}
+
+.note-content {
+  margin: 1.1em 0;
+  font-size: 1.04rem;
+}
+.note-plugin {
+  margin-top: 2rem;
+}
+.note-actions {
+  margin-top: 1.5em;
+}
+.note-actions .btn {
+  margin-right: 0.4em;
+}
+.note-placeholder {
+  margin: 4em 0;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* Forms, modals, dialog */
+input, select, textarea {
+  padding: 8px;
+  border: 1px solid var(--border-color);
+  border-radius: 5px;
+  font-size: 1.05rem;
+  width: 100%;
+  margin-bottom: 0.7em;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: border-color 0.15s;
+}
+input:focus, textarea:focus, select:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+.search-input {
+  width: 100%;
+  padding: 8px 13px;
+  margin-bottom: 1.1em;
+  border-radius: 9px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-primary);
+}
+.modal-overlay {
+  position: fixed;
+  top:0; left:0; right:0; bottom:0;
+  z-index: 100;
+  background: rgba(0,0,0,0.18);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-radius: 11px;
+  box-shadow: 0px 14px 31px rgba(22,20,19,0.21);
+  padding: 2.25em 2.1em 2.2em 2.1em;
+  min-width: 295px;
+  max-width: 420px;
+  width: 95vw;
+}
+.modal h2 {
+  margin-top: 0;
+}
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.7em;
+}
+.auth-error {
+  color: #e87a41;
+  margin-top: 1em;
+  font-size: 0.98em;
+}
+.category-input {
+  width: 90%;
+  margin-bottom: 1em;
+}
+
+/* Loader states */
+.notes-loading {
+  padding: 2em;
+  font-size: 1.22em;
+  color: var(--primary);
+}
+
+/* Responsive Design */
+@media (max-width: 1050px) {
+  .sidebar, .notes-list-container { min-width: 135px; width: 16vw; }
+  .note-details-panel { padding: 1rem 1vw; }
+}
+@media (max-width: 900px) {
+  .notes-main, .app-flex { flex-direction: column; }
+  .sidebar, .notes-list-container { width: 100vw; min-width: 0; max-width: 100vw; }
+  .sidebar { height: auto; position: relative; }
+  .notes-list-container { height: 230px; overflow-x: auto; }
+}
+@media (max-width: 600px) {
+  .notes-main { flex-direction: column !important; }
+  .sidebar, .notes-list-container, .note-details-panel { width: 100vw !important; min-width: 0 !important; }
+  .modal { padding: 13vw 3vw; min-width: 0; }
+  .navbar { flex-direction: column; gap: 0.9em; min-height: 76px;}
+  .btn, .btn-large { width: 100%; margin: 6px 0; }
+}
+
+.unauth-main {
+  padding-top: 6vw;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .theme-toggle {
+    top: 10px;
+    right: 10px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
 }
 
 .App-logo {
